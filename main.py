@@ -1,48 +1,57 @@
-import datetime
-import time
+# Expense Tracker Project
 
-name = input("Swagat h, enter your name : ")
-presentHour = datetime.datetime.now().hour
-
-if 5 <= presentHour <= 11:
-    print("Good morning, ", name)
-elif 11 <= presentHour <= 17:
-    print("Good afternoon, ", name)
-elif 17 <= presentHour <= 20:
-    print("Good evening, ", name)
-else:
-    print("Good night, ", name)
-
-print("Namaste! Welcome to Your ChatBot")
-print("You can ask me basic question, Type ' bye' to exit from the bot")
-
-# Chatbot Memory Creation [ dictionary of responses ]
-
-responses = {
-    "hello": "Hi, welcome. How can I help you?",
-    "how are you": "I am very fine. Thank you",
-    "who are you": "I am smart AI chattbot",
-    "motivate me": "Keep going. Every bug of your project makes you a better developer",
-    "happy": "Great to hear that",
-    "functions kya hote h": "jakar chapter 7 padho"
-}
-
-# Method/Function to get response of chatBot
-
-def getResponseofBot(userQuestion):
-    userQuestion = userQuestion.lower()
-    for eachKey in responses:
-        if eachKey in userQuestion:
-            return responses[eachKey]
-        
-    return "I am not able to tell that yet. Mai jald hi ye sikh lunga"
-
-# Take user input
+expensesList = [] #List of expenses in form of dictionary
+print("Welcome to Expense Tracker")
 
 while True:
-    userInput = input("Please ask your question:")
-    reply = getResponseofBot(userInput)
-    print("Bot Response :", reply)
+    print("====MENU====")
+    print("1. Add Expense")
+    print("2. View All Expenses")
+    print("3. View Total Khrcha")
+    print("4. Exit")
 
-    if "bye" in userInput.lower():
+    choice = int(input("Please Enter Your Choice: "))
+
+# 1. Add Expense
+    if(choice == 1):
+        date = input("Enter the Date: ")
+        category = input("Enter the category (Food, Travel, Makeup, Books, etc): ")
+        description = input("Give More Detail: ")
+        amount = float(input("Enter the amount: "))
+
+        expenses = {
+            "date": date,
+            "category": category,
+            "description": description,
+            "amount": amount
+        }
+
+        expensesList.append(expenses)
+        print(" \n DONE bro. Expense is added succesfully")
+
+# 2. View All Expenses
+    elif(choice == 2):
+        if(len(expensesList)==0):
+            print("No Expenses Added")
+        else:
+            print("===== Ye y apka sara expense =====")
+            count= 1
+            for eachKharcha in expensesList:
+                print(f"Kharcha Number {count} -> {eachKharcha["date"]}, {eachKharcha["category"]}, {eachKharcha["description"]}, {eachKharcha["amount"]}")
+                count = count + 1
+
+# 3. View Total Spending
+    elif(choice == 3):
+        total = 0
+        for eachKharcha in expensesList:
+            total = total + eachKharcha["amount"]
+
+        print("\n TOTAL KHRCHA = ", total)
+
+# 4. EXIT
+    elif(choice == 4):
+        print("Thaank you for using our System")
         break
+
+    else:
+        print("INVALID CHOICE. TRY AGAIN")
